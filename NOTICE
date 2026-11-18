@@ -1,18 +1,18 @@
 Rustarche
-Claude Code용 Rust 스킬. metarche(https://github.com/metapbl/Metarche)의 언어 스킬로도 쓴다.
+A Rust skill for Claude Code. Also serves as a language skill for metarche (https://github.com/metapbl/Metarche).
 
-근거: "러스트 지침 전문가 기준 조사" 보고서(2026-11-13, 사용자 소장)와 연구 노트 6개.
-보고서가 인용한 아래 자료의 방식과 사실만 참고했다. 문장은 옮기지 않았다.
+Basis: the research report "Rust guidelines by expert consensus" (2026-11-13, kept by the author) and six research notes.
+Only the approaches and facts of the sources the report cites were used. No text was copied.
 
-- Rust 공식: API Guidelines, Edition Guide, Cargo Book(Build performance, config, workspaces, rust-version),
-  Clippy Book(Usage, lints), RELEASES.md, Nomicon
+- Rust official: API Guidelines, Edition Guide, Cargo Book (Build performance, config, workspaces, rust-version),
+  Clippy Book (Usage, lints), RELEASES.md, Nomicon
 - Microsoft Pragmatic Rust Guidelines — https://microsoft.github.io/rust-guidelines/
 - Effective Rust (David Drysdale), Rust Design Patterns, The Rust Performance Book (Nicholas Nethercote)
 - BurntSushi "Using unwrap() in Rust is Okay", Luca Palmieri "Error Handling in Rust",
-  matklad(How to Test, Large Rust Workspaces), Alice Ryhl(blocking, actors), Tokio 문서
-- Kent Beck "Augmented Coding", fish shell 이전 사례
-- ruff·uv(Astral), zed, codex의 에이전트 지침 파일
-- Anthropic Claude Code 문서(Best practices, Memory, Hooks)
+  matklad (How to Test, Large Rust Workspaces), Alice Ryhl (blocking, actors), the Tokio documentation
+- Kent Beck "Augmented Coding", the fish shell port
+- Agent guideline files of ruff and uv (Astral), zed, codex
+- Anthropic Claude Code documentation (Best practices, Memory, Hooks)
 - RustEvo² (arXiv:2503.16922)
 
-확인 기준: Rust 1.100.0 (2026-11), Windows MSVC 툴체인.
+Checked against: Rust 1.100.0 (2026-11), Windows MSVC toolchain.

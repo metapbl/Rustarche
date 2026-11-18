@@ -1,8 +1,8 @@
-# 루트 Cargo.toml (가상 매니페스트). crate는 crates/ 아래에 둔다.
-# crate는 cargo new crates/<이름>으로 만든다. edition·rust-version 상속과 [lints] workspace = true가 자동으로 들어간다.
+# Root Cargo.toml (virtual manifest). Crates live under crates/.
+# Create crates with cargo new crates/<name>; edition and rust-version inheritance and [lints] workspace = true are added automatically.
 [workspace]
 members = ["crates/*"]
-resolver = "3" # 가상 매니페스트에서는 직접 적어야 한다
+resolver = "3" # must be written explicitly in a virtual manifest
 
 [workspace.package]
 edition = "2024"
@@ -11,15 +11,15 @@ rust-version = "1.100"
 [workspace.dependencies]
 
 [workspace.lints.rust]
-unsafe_code = "forbid" # unsafe가 필요한 crate만 그 crate에서 푼다
+unsafe_code = "forbid" # lift it only in the crate that needs unsafe
 
 [workspace.lints.clippy]
 all = { level = "warn", priority = -1 }
-pedantic = { level = "warn", priority = -1 } # 소음이 큰 lint는 이유를 달아 allow
-# restriction 그룹 전체는 켜지 않고 골라서 켠다
-unwrap_used = "warn"                  # 테스트는 clippy.toml에서 허용
+pedantic = { level = "warn", priority = -1 } # allow noisy lints with a reason
+# never the whole restriction group; pick lints from it
+unwrap_used = "warn"                  # allowed in tests via clippy.toml
 allow_attributes_without_reason = "warn"
-wildcard_enum_match_arm = "warn"      # 자기 enum은 _ 없이 match
+wildcard_enum_match_arm = "warn"      # match your own enums without _
 dbg_macro = "warn"
 todo = "warn"
 map_err_ignore = "warn"
@@ -27,9 +27,9 @@ clone_on_ref_ptr = "warn"
 undocumented_unsafe_blocks = "warn"
 
 [workspace.lints.cargo]
-unused_dependencies = "warn" # 1.100 이상
+unused_dependencies = "warn" # 1.100 or later
 
-# 편집 루프를 빠르게: 디버그 정보를 줄인다. 디버거가 필요하면 그때 따로 프로필을 둔다.
+# Faster edit loop: less debug info. Add a separate profile when a debugger is needed.
 [profile.dev]
 debug = "line-tables-only"
 

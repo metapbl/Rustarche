@@ -1,20 +1,20 @@
-# 리팩토링·다른 언어에서 이전
+# Refactoring and porting from another language
 
-구조 변경과 동작 변경을 섞지 않는다는 일반 규칙은 metarche(plan.md §2)에 있다. 여기는 Rust에서 더할 것만 적는다.
+The general rule of keeping structural and behavioral changes apart lives in metarche (plan.md §2). This file adds only what Rust needs.
 
-## §1 손대기 전에 동작을 고정한다
-- 테스트가 없는 코드는 지금 동작을 스냅샷(insta)이나 golden 파일로 먼저 고정하고, 그것을 별도 커밋으로 둔다.
-- 순수 리팩토링 중에 스냅샷이 바뀌면 받아들이지 않는다. 회귀로 보고 멈춘 뒤 보고한다.
-- 스냅샷 파일을 직접 고치지 않는다. 다시 생성하고(`cargo insta review`) diff를 보인다.
-- 다른 언어에서 옮길 때는 옛 구현과 새 구현에 같은 입력을 넣어 출력을 비교하는 테스트를 둔다. 언제든 배포할 수 있는 상태로 조금씩 옮긴다.
+## §1 Pin behavior before touching it
+- For code without tests, pin the current behavior first with snapshots (insta) or golden files, in a commit of its own.
+- If a snapshot changes during a pure refactor, do not accept it. Treat it as a regression, stop and report.
+- Do not edit snapshot files by hand. Regenerate them (`cargo insta review`) and show the diff.
+- When porting from another language, keep a test that feeds the same input to the old and new implementations and compares the output. Move over a little at a time, always in a shippable state.
 
-## §2 옮길 때 지킬 것
-- 원래 코드에 에러 경로가 있던 곳을 `unwrap`·`expect`·assert로 옮기지 않는다. `Result`로 옮긴다 (실제 이전 사례에서 버그가 가장 많이 난 곳).
-- 옮기는 동안에는 전후 비교가 쉽도록 큰 구조를 유지해도 된다. 다만 다른 언어의 관용구(널 검사 함수, 상속 계층, 예외 흐름)는 Rust 방식(`Option`, enum·trait, `Result`)으로 바꾼다.
-- 외부 입력은 경계에서 검증된 타입으로 바꾼다. typestate 같은 무거운 기법은 요청이 있을 때만.
+## §2 While porting
+- Do not turn places where the original code had an error path into `unwrap`, `expect` or assert. Port them to `Result` (this is where real ports produced the most bugs).
+- While porting, the overall structure may stay as it was to keep before and after comparable. But replace the other language's idioms (null-check helpers, inheritance hierarchies, exception flow) with Rust's (`Option`, enums and traits, `Result`).
+- Turn external input into validated types at the boundary. Heavy techniques such as typestate only when asked.
 
-## §3 Rust 도구
-- 자기 crate의 enum은 `_` 없이 match한다 (lint `wildcard_enum_match_arm`). 변형이 늘면 컴파일 오류로 고칠 곳이 드러난다.
-- `#[non_exhaustive]`는 정의한 crate 안에서는 효과가 없다.
-- 공개 라이브러리의 API를 바꾸면 `cargo semver-checks`를 돌린다. 통과는 필요조건일 뿐이다 (모든 위반을 잡지는 않는다).
-- Python 확장(PyO3)이면 오래 걸리는 Rust 작업 동안 GIL을 놓는다. 현재 API 이름은 docs.rs에서 확인한다.
+## §3 Rust tools
+- Match on your own crate's enums without `_` (lint `wildcard_enum_match_arm`). New variants then show up as compile errors where code must change.
+- `#[non_exhaustive]` has no effect inside the crate that defines it.
+- When changing a public library's API, run `cargo semver-checks`. Passing is necessary, not sufficient (it does not catch every violation).
+- For a Python extension (PyO3), release the GIL during long-running Rust work. Check the current API name on docs.rs.

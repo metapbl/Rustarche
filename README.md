@@ -20,7 +20,7 @@
 Rust + archē: a Claude Code skill with Cargo templates, lint settings, check commands and CLAUDE.md rules for Rust.
 
 > [!NOTE]
-> The skill's instructions are written in Korean, so the rules and notes it adds to your project are in Korean too.
+> The skill's instructions are in English. It writes the rules and notes it adds to your project in your language.
 
 ## What it does
 - **new**: sets up a Cargo workspace with lints, toolchain pin and dev profiles from the templates.

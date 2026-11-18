@@ -1,24 +1,24 @@
-# CLAUDE.md에 옮길 Rust 명령과 규칙
+# Rust commands and rules for CLAUDE.md
 
-lint·rustfmt·훅이 강제하는 것은 넣지 않는다. 아래만 옮기고, `{crate}`는 실제 이름으로 바꾼다.
-대문자 강조(IMPORTANT, NEVER)는 쓰지 않는다.
+Leave out what lints, rustfmt and hooks already enforce. Copy only the lines below, in the user's language, and replace `{crate}` with the real name.
+No capitalized emphasis (IMPORTANT, NEVER).
 
-## 명령
-- 편집 중 빠른 확인: `cargo check -p {crate}`
-- 테스트 하나: `cargo test -p {crate} {이름 일부}` · 문서 테스트: `cargo test --doc`
-- 완료 확인: `cargo clippy --workspace --all-targets --config 'build.warnings="deny"'`
-- 서식: `cargo fmt --all` (설정 파일을 바꾸지 않는다)
+## Commands
+- Quick check while editing: `cargo check -p {crate}`
+- One test: `cargo test -p {crate} {part of the name}` · doc tests: `cargo test --doc`
+- Done check: `cargo clippy --workspace --all-targets --config 'build.warnings="deny"'`
+- Formatting: `cargo fmt --all` (do not change the config file)
 
-## 규칙
-- 셸에서 `RUSTFLAGS`, feature, 프로필을 바꾸지 않는다. release 빌드는 요청이 있을 때만 한다.
-- 의존성 추가, `cargo update`, feature 변경은 먼저 말하고 한다. 추가는 `cargo add`, lockfile은 `cargo update -p {crate} --precise {버전}`으로만 바꾼다.
-- crate API는 docs.rs나 `cargo doc --no-deps`로 확인한다. 기억한 시그니처를 믿지 않는다.
-- 경고나 테스트 실패를 원래 있던 것으로 가정하지 않는다.
-- 예상 가능한 실패(IO, 입력, 네트워크)는 `Result`로 처리한다. 바이너리는 `anyhow` + `.context()`, 라이브러리 경계는 타입 있는 에러. 로그는 에러를 처리하는 곳에서만 남긴다.
-- borrow 오류가 나면 구조(소유자 정리, 인덱스, borrow 나누기, `mem::take`)부터 바꾼다. clone은 의도가 있을 때만.
-- lint를 끄지 말고 원인을 고친다. 꼭 꺼야 하면 `#[expect(clippy::{lint}, reason = "...")]`. 죽은 코드는 지운다.
-- async, unsafe, `#[inline]`, LTO·allocator 변경은 근거(동시 IO 요구, 벤치마크, 프로파일)가 있을 때만 들인다.
-- 주석과 문서에는 최종 상태만 쓴다. 옮긴 항목의 옛 경로 re-export를 남기지 않는다.
+## Rules
+- Do not change `RUSTFLAGS`, features or profiles from the shell. Build in release mode only when asked.
+- Say so before adding a dependency, running `cargo update` or changing features. Add with `cargo add`; change the lockfile only with `cargo update -p {crate} --precise {version}`.
+- Check crate APIs on docs.rs or with `cargo doc --no-deps`. Do not trust remembered signatures.
+- Do not assume a warning or a failing test was already there.
+- Handle expected failures (IO, input, network) with `Result`. Binaries use `anyhow` + `.context()`; library boundaries use typed errors. Log errors only where they are handled.
+- On a borrow error, change the structure first (clarify the owner, use indices, split borrows, `mem::take`). Clone only on purpose.
+- Fix the cause instead of silencing a lint. If you must silence it, `#[expect(clippy::{lint}, reason = "...")]`. Delete dead code.
+- Bring in async, unsafe, `#[inline]`, LTO or allocator changes only with evidence (a need for concurrent IO, a benchmark, a profile).
+- Comments and docs describe only the final state. Do not leave re-exports at the old path of moved items.
 
-## 넣지 않는 것 (도구가 맡음)
-명명·서식·import 정렬(rustfmt), `_` 없는 match(`wildcard_enum_match_arm`), unwrap 금지(`unwrap_used`), 이유 없는 lint 끄기(`allow_attributes_without_reason`), let chains·format 인자(clippy), `#![deny(warnings)]`(소스에 넣지 않고 `build.warnings`로).
+## Left out (tools handle these)
+Naming, formatting and import order (rustfmt), match without `_` (`wildcard_enum_match_arm`), no unwrap (`unwrap_used`), silencing lints without a reason (`allow_attributes_without_reason`), let chains and inline format args (clippy), `#![deny(warnings)]` (not in source; use `build.warnings`).

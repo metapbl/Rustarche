@@ -1,0 +1,4 @@
+# 정확한 버전을 고정한다. 처음 쓸 때 이 버전 툴체인을 따로 내려받는다.
+[toolchain]
+channel = "1.100.0"
+components = ["clippy", "rustfmt"]

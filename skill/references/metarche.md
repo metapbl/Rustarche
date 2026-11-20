@@ -16,12 +16,12 @@ Each metarche stage reads this file. The workflow, records and approvals follow 
 | Full test | `cargo test --workspace` (+ `cargo test --doc` for a library). Set the baseline on incremental builds, excluding the first build — recommended: 120 seconds |
 | Per-file checks | `'.rs' = @('rustfmt --check --edition 2024')` — always give the edition; without it 2024 syntax such as let chains is an error |
 | End-of-turn checks (project-wide) | `'cargo clippy --workspace --all-targets --config build.warnings="deny"'` — in the finish.ps1 list, in this form without outer single quotes. Wrap it as `'build.warnings="deny"'` only when typing it in a shell |
-| Dangerous commands (settings.json ask) | `Bash(cargo update*)`, `Bash(cargo clean*)`, `Bash(cargo build --release*)`, `Bash(cargo install*)` and the same `PowerShell(...)` rules |
+| Dangerous commands (ask before running) | `cargo update`, `cargo clean`, `cargo build --release`, `cargo install`. Claude Code: `Bash(cargo update*)` etc. and the same `PowerShell(...)` ask rules; Codex: `prefix_rule(pattern = ["cargo", "update"], decision = "prompt")` etc. in `.codex/rules/metarche.rules` |
 
 - `cargo check` and `cargo clippy` cannot take a file path, so they do not belong in the per-file check (check hook).
 - Block warnings with `build.warnings` instead of `RUSTFLAGS=-Dwarnings` or `-- -D warnings`. It does not invalidate the build cache (1.97 or later).
 
-## §3 docs — CLAUDE.md
+## §3 docs — AGENTS.md
 - Copy the matching lines of `references/rules.md` into the "Commands" and "Rules for this project" sections, in the project's document language. If it exceeds 60 lines, move rule lines to REFERENCE first.
 - Trap log candidates for REFERENCE (record when first hit):
   - The sample function `cargo new` writes fails the pedantic lints right away.

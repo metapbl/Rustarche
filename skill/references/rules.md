@@ -1,4 +1,4 @@
-# Rust commands and rules for CLAUDE.md
+# Rust commands and rules for AGENTS.md
 
 Leave out what lints, rustfmt and hooks already enforce. Copy only the lines below, in the user's language, and replace `{crate}` with the real name.
 No capitalized emphasis (IMPORTANT, NEVER).

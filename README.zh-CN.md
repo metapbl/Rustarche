@@ -59,6 +59,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 在 Claude Code 或 Codex 的 `/skills` 中看到 `rustarche` 即安装完成。更新时在仓库文件夹中运行 `git pull`。
 
+## 快速开始
+在空文件夹中启动智能体并调用本技能（Codex 中为 `$rustarche new`）：
+~~~
+> /rustarche new
+~~~
+它会先展示模板并在创建任何文件前征求同意。批准后，它创建工作区并运行三项检查。新的工作区会全部通过：
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## 使用
 | 命令 | 何时使用 |
 |---|---|
@@ -91,6 +103,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe、FFI 与性能
 └─ templates/            Cargo.toml.workspace、rust-toolchain.toml、clippy.toml、gitignore
 ~~~
+
+## 项目状态
+- 已在 Windows（MSVC）上用 Rust 1.100.0 和 Claude Code 验证：由模板生成的新工作区能通过格式、lint 和测试检查。
+- 尚未在 Codex 或大型代码库中试用。
+
+## 帮助与贡献
+- 提问和报告缺陷：[GitHub Issues](https://github.com/metapbl/Rustarche/issues)。
+- Pull request：请先开 issue 讨论改动。技能文本保持英文，并确保由模板生成的新工作区通过快速开始中的三项检查。
+
+## 安全
+请通过 [GitHub 私密漏洞报告](https://github.com/metapbl/Rustarche/security/advisories/new) 报告漏洞，不要发在公开 issue 中。
 
 ## 致谢
 本技能参考的资料列在 [`NOTICE`](NOTICE) 中。

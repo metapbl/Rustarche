@@ -59,6 +59,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 Claude Code나 Codex의 `/skills`에 `rustarche`가 보이면 끝입니다. 갱신은 저장소 폴더에서 `git pull`을 실행합니다.
 
+## 빠른 시작
+빈 폴더에서 에이전트를 실행하고 스킬을 부릅니다(Codex에서는 `$rustarche new`):
+~~~
+> /rustarche new
+~~~
+템플릿을 보여 주고, 무엇을 만들지 먼저 묻습니다. 승인하면 워크스페이스를 만들고 세 가지 검사를 실행합니다. 새 워크스페이스는 모두 통과합니다:
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## 사용
 | 명령 | 언제 |
 |---|---|
@@ -91,6 +103,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe, FFI, 성능
 └─ templates/            Cargo.toml.workspace, rust-toolchain.toml, clippy.toml, gitignore
 ~~~
+
+## 프로젝트 상태
+- Windows(MSVC)의 Rust 1.100.0과 Claude Code에서 확인했습니다. 템플릿으로 만든 새 워크스페이스가 서식·lint·테스트를 모두 통과합니다.
+- Codex와 큰 코드베이스에서는 아직 써 보지 않았습니다.
+
+## 도움과 기여
+- 질문과 버그 제보: [GitHub Issues](https://github.com/metapbl/Rustarche/issues).
+- Pull request: 먼저 이슈를 열어 변경을 협의해 주세요. 스킬 문장은 영어로 쓰고, 템플릿으로 만든 새 워크스페이스가 빠른 시작의 세 가지 검사를 통과해야 합니다.
+
+## 보안
+취약점은 공개 이슈가 아니라 [GitHub 비공개 취약점 제보](https://github.com/metapbl/Rustarche/security/advisories/new)로 알려 주세요.
 
 ## 출처
 이 스킬이 참고한 자료는 [`NOTICE`](NOTICE)에 있습니다.

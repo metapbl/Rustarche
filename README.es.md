@@ -59,6 +59,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 Está listo cuando `rustarche` aparece en `/skills` dentro de Claude Code o Codex. Para actualizar, ejecuta `git pull` en la carpeta del repositorio.
 
+## Inicio rápido
+En una carpeta vacía, inicia tu agente y llama a la skill (`$rustarche new` en Codex):
+~~~
+> /rustarche new
+~~~
+Muestra las plantillas y pregunta antes de crear nada. Cuando lo apruebas, crea el workspace y ejecuta las tres comprobaciones. Un workspace nuevo las pasa todas:
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## Uso
 | Comando | Cuándo |
 |---|---|
@@ -91,6 +103,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe, FFI y rendimiento
 └─ templates/            Cargo.toml.workspace, rust-toolchain.toml, clippy.toml, gitignore
 ~~~
+
+## Estado del proyecto
+- Comprobado con Rust 1.100.0 en Windows (MSVC) con Claude Code: un workspace nuevo creado con las plantillas pasa formato, lint y pruebas.
+- Aún no se ha probado en Codex ni en una base de código grande.
+
+## Ayuda y contribuciones
+- Preguntas e informes de errores: [GitHub Issues](https://github.com/metapbl/Rustarche/issues).
+- Pull requests: abre primero un issue para acordar el cambio. Mantén el texto de la skill en inglés, y que un workspace nuevo creado con las plantillas pase las tres comprobaciones del inicio rápido.
+
+## Seguridad
+Informa de vulnerabilidades en privado mediante el [informe privado de vulnerabilidades de GitHub](https://github.com/metapbl/Rustarche/security/advisories/new), no en un issue público.
 
 ## Créditos
 Las fuentes en las que se basa esta skill están en [`NOTICE`](NOTICE).

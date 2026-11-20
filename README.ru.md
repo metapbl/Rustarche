@@ -59,6 +59,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 Готово, когда `rustarche` появится в `/skills` в Claude Code или Codex. Для обновления выполните `git pull` в папке репозитория.
 
+## Быстрый старт
+В пустой папке запустите агента и вызовите навык (`$rustarche new` в Codex):
+~~~
+> /rustarche new
+~~~
+Навык показывает шаблоны и спрашивает, прежде чем что-то создавать. После одобрения он создаёт рабочее пространство и запускает три проверки. Новое рабочее пространство проходит их все:
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## Использование
 | Команда | Когда |
 |---|---|
@@ -91,6 +103,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe, FFI и производительность
 └─ templates/            Cargo.toml.workspace, rust-toolchain.toml, clippy.toml, gitignore
 ~~~
+
+## Состояние проекта
+- Проверено на Rust 1.100.0 в Windows (MSVC) с Claude Code: новое рабочее пространство из шаблонов проходит форматирование, линты и тесты.
+- В Codex и на большой кодовой базе ещё не проверялось.
+
+## Помощь и участие
+- Вопросы и сообщения об ошибках: [GitHub Issues](https://github.com/metapbl/Rustarche/issues).
+- Pull request: сначала откройте issue и согласуйте изменение. Текст навыка — на английском; новое рабочее пространство из шаблонов должно проходить три проверки из быстрого старта.
+
+## Безопасность
+Сообщайте об уязвимостях приватно через [приватные отчёты об уязвимостях GitHub](https://github.com/metapbl/Rustarche/security/advisories/new), а не в публичном issue.
 
 ## Благодарности
 Источники, на которые опирается навык, перечислены в [`NOTICE`](NOTICE).

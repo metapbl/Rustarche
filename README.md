@@ -57,6 +57,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 You are done when `rustarche` appears in `/skills` in Claude Code or Codex. To update, run `git pull` in the repository folder.
 
+## Quick start
+In an empty folder, start your agent and call the skill (`$rustarche new` in Codex):
+~~~
+> /rustarche new
+~~~
+It shows the templates and asks before creating anything. Once you approve, it creates the workspace and runs the three checks. A fresh workspace passes all of them:
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## Usage
 | Command | When |
 |---|---|
@@ -89,6 +101,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe, FFI and performance
 └─ templates/            Cargo.toml.workspace, rust-toolchain.toml, clippy.toml, gitignore
 ~~~
+
+## Project status
+- Checked with Rust 1.100.0 on Windows (MSVC) in Claude Code: a new workspace from the templates formats, lints and tests cleanly.
+- Not yet tried in Codex or on a large codebase.
+
+## Help and contributing
+- Questions and bug reports: [GitHub Issues](https://github.com/metapbl/Rustarche/issues).
+- Pull requests: open an issue first to agree on the change. Keep the skill text in English, and keep a new workspace from the templates passing the three checks in the quick start.
+
+## Security
+Report vulnerabilities privately through [GitHub private vulnerability reporting](https://github.com/metapbl/Rustarche/security/advisories/new), not in a public issue.
 
 ## Credits
 Sources this skill draws on are listed in [`NOTICE`](NOTICE).

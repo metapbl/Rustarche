@@ -59,6 +59,18 @@ mkdir -p ~/.agents/skills && ln -s ~/Rustarche/skill ~/.agents/skills/rustarche
 ~~~
 Claude Code または Codex の `/skills` に `rustarche` が表示されれば完了です。更新はリポジトリのフォルダーで `git pull` を実行します。
 
+## クイックスタート
+空のフォルダーでエージェントを起動し、スキルを呼び出します（Codex では `$rustarche new`）：
+~~~
+> /rustarche new
+~~~
+テンプレートを示し、何かを作る前に確認を求めます。承認するとワークスペースを作り、3 つのチェックを実行します。新しいワークスペースはすべて通ります：
+~~~
+cargo fmt --all --check                                               # prints nothing, exit 0
+cargo clippy --workspace --all-targets --config 'build.warnings="deny"'  # ends with: Finished `dev` profile
+cargo test --workspace                                                # test result: ok.
+~~~
+
 ## 使い方
 | コマンド | いつ使うか |
 |---|---|
@@ -91,6 +103,17 @@ skill/
 │  └─ unsafe-perf.md     unsafe、FFI、性能
 └─ templates/            Cargo.toml.workspace、rust-toolchain.toml、clippy.toml、gitignore
 ~~~
+
+## プロジェクトの状況
+- Windows（MSVC）の Rust 1.100.0 と Claude Code で確認済みです。テンプレートから作った新しいワークスペースは、フォーマット・lint・テストをすべて通ります。
+- Codex や大きなコードベースではまだ試していません。
+
+## サポートと貢献
+- 質問とバグ報告：[GitHub Issues](https://github.com/metapbl/Rustarche/issues)。
+- Pull request：まず issue を開いて変更内容を相談してください。スキルの文章は英語で書き、テンプレートから作った新しいワークスペースがクイックスタートの 3 つのチェックを通るようにしてください。
+
+## セキュリティ
+脆弱性は公開の issue ではなく、[GitHub の非公開脆弱性報告](https://github.com/metapbl/Rustarche/security/advisories/new)で報告してください。
 
 ## クレジット
 このスキルが参考にした資料は [`NOTICE`](NOTICE) にあります。
